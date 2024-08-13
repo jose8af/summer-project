@@ -1,6 +1,7 @@
 import ROOT
 import os
 import numpy as np
+import matplotlib.pyplot as plt
 
 def perform_fit(energy, variable, value1, value2):
     ini_range = energy - value1
@@ -80,8 +81,9 @@ def read_fit_results(filename):
 
 # Function to compute combined sigma with uncertainty
 def compute_combined_sigma(frac, sigma1, sigma2, frac_err, sigma1_err, sigma2_err):
-    sigma_combined = frac * sigma1**2 + (1 - frac) * sigma2**2
-    
+    #sigma_combined = (frac**2 * sigma1**2 + (1 - frac)**2 * sigma2**2 + frac*(1-frac)*sigma1*sigma2)**(1/2)
+    sigma_combined = (frac**2 * sigma1**2 + (1 - frac)**2 * sigma2**2)**(1/2)
+
     # Error propagation
     d_sigma_combined_d_frac = sigma1**2 + sigma2**2
     d_sigma_combined_d_sigma1 = 2*frac*sigma1
@@ -95,3 +97,20 @@ def compute_combined_sigma(frac, sigma1, sigma2, frac_err, sigma1_err, sigma2_er
     
     return sigma_combined, sigma_combined_err
 
+def plot(masses, widths, variable):
+    plt.rcParams['text.usetex'] = True
+    plt.rcParams['font.size'] = 16  
+    plt.rcParams['legend.fontsize'] = 14  
+    
+    # Plotting the data points with a connecting line
+    plt.plot(masses, widths, linestyle='None', color='blue', marker='s', markerfacecolor='red', markersize=8, label='Data Points')
+
+    plt.xlabel(r'Higgs Mass [\textit{MeV}]')
+    plt.ylabel(r'Width [\textit{MeV}]')
+    plt.title(rf'Width vs Mass for {variable}')
+    plt.grid(True, linestyle='--', alpha=0.7)
+    plt.legend(loc='best')
+    
+    # Save the plot
+    plt.savefig(f'plots/width_vs_mass/{variable}.png')
+    plt.show()

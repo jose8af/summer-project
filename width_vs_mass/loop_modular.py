@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 from code.functions import perform_fit, read_fit_results, compute_combined_sigma
 
 energies = [500, 1500, 2500, 3500, 4500]
-variable = 'H_M' #H_DTF_BestPVOnly_MASS  H_M H_DTF_BestPV_MASS
+variable = 'H_DTF_BestPVOnly_MASS' #H_DTF_BestPVOnly_MASS  H_M H_DTF_BestPV_MASS
 
-l_limit = 800
-r_limit = 1000
+l_limit = 500
+r_limit = 800
 for energy in energies:
     perform_fit(energy, variable, l_limit, r_limit)
 
@@ -43,13 +43,13 @@ with open(output_file, 'w') as f:
             print(f"File {filepath} not found.")
 
 
-
+error = [0,0,0,0,0]
 plt.rcParams['text.usetex'] = True
 plt.rcParams['font.size'] = 16  
 plt.rcParams['legend.fontsize'] = 14  
-plt.errorbar(masses, combined_sigmas, yerr=combined_sigmas_err, fmt='s', capsize=5, color='blue', markerfacecolor='red', markersize=8, label='Data Points')
+plt.errorbar(masses, combined_sigmas, yerr=error, linestyle= 'None', fmt='s', capsize=5, color='blue', markerfacecolor='red', markersize=8, label='Data Points')
 
-plt.plot(masses, combined_sigmas, linestyle='-', color='gray', alpha=0.6)
+plt.plot(masses, combined_sigmas, color='gray', linestyle = 'None', alpha=0.6)
 plt.xlabel(r'Higgs Mass [\textit{MeV}]')
 plt.ylabel(r'Combined Sigma [\textit{MeV}$^{2}$]')
 plt.title(rf'Width vs Mass for {variable}')
