@@ -97,7 +97,7 @@ def compute_combined_sigma(frac, sigma1, sigma2, frac_err, sigma1_err, sigma2_er
     
     return sigma_combined, sigma_combined_err
 
-def plot(masses, widths, variable):
+def plot(masses, widths, variable, path):
     plt.rcParams['text.usetex'] = True
     plt.rcParams['font.size'] = 16  
     plt.rcParams['legend.fontsize'] = 14  
@@ -112,5 +112,5 @@ def plot(masses, widths, variable):
     plt.legend(loc='best')
     
     # Save the plot
-    plt.savefig(f'plots/width_vs_mass/{variable}.png')
+    plt.savefig(path)
     plt.show()
